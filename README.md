@@ -1,9 +1,9 @@
 # timezip
 A simple archive tool for backup files and folders
 
-<div style="text-align: center">
-<img src="./timezip.png">
-</div>
+<p align="center">
+  <img src="./timezip.png">
+</p>
 
 ## What is this?
 This tools allows you to archive some specific file or folder into a zip file and name it with timestamp.
