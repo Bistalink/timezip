@@ -1,0 +1,30 @@
+{
+  "name": "timezip",
+  "version": "0.1.0",
+  "description": "Simple archive and timestamping tool. Suitable for backup",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "esbuild src/main.ts --bundle --minify --outfile=dist/main.js --platform=node",
+    "build-dev": "esbuild src/main.ts --bundle --outfile=dist/main.js --platform=node",
+    "clean": "rimraf dist && rimraf release",
+    "package": "run-p clean && cross-env NODE_ENV=production run-p build && pkg -t node18-win,node18-macos,node18-linux -o release/timezip dist/main.js",
+    "test": "run-p clean && run-p build-dev && cross-env NODE_ENV=development node . test/target ../"
+  },
+  "author": "bistalink",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/adm-zip": "^0.5.5",
+    "@types/date-utils": "^1.2.5",
+    "@types/node": "^20.11.7",
+    "cross-env": "^7.0.3",
+    "esbuild": "^0.19.12",
+    "npm-run-all": "^4.1.5",
+    "pkg": "^5.8.1",
+    "rimraf": "^5.0.5",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.10",
+    "date-utils": "^1.2.21"
+  }
+}
