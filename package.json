@@ -4,10 +4,10 @@
   "description": "Simple archive and timestamping tool. Suitable for backup",
   "main": "dist/main.js",
   "scripts": {
-    "build": "esbuild src/main.ts --bundle --minify --outfile=dist/main.js --platform=node",
+    "build": "esbuild src/main.ts --bundle --minify --outfile=dist/main.js --platform=node && esbuild src/cli.ts --bundle --minify --outfile=dist/cli.js --platform=node",
     "build-dev": "esbuild src/main.ts --bundle --outfile=dist/main.js --platform=node",
     "clean": "rimraf dist && rimraf release",
-    "package": "run-p clean && cross-env NODE_ENV=production run-p build && pkg -t node18-win,node18-macos,node18-linux -o release/timezip dist/main.js",
+    "package": "run-p clean && cross-env NODE_ENV=production run-p build && pkg -t node18-win,node18-macos,node18-linux -o release/timezip dist/cli.js",
     "test": "run-p clean && run-p build-dev && cross-env NODE_ENV=development node . test/target ../"
   },
   "author": "bistalink",
