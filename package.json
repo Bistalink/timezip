@@ -1,13 +1,14 @@
 {
   "name": "timezip",
-  "version": "1.0.0",
+  "version": "1.1.3",
   "description": "Simple archive and timestamping tool. Suitable for backup",
   "main": "dist/main.js",
   "scripts": {
-    "build": "esbuild src/main.ts --bundle --minify --outfile=dist/main.js --platform=node",
+    "build": "esbuild src/main.ts --bundle --minify --outfile=dist/main.js --platform=node && esbuild src/cli.ts --bundle --minify --outfile=dist/cli.js --platform=node && run-p emitD",
     "build-dev": "esbuild src/main.ts --bundle --outfile=dist/main.js --platform=node",
+    "emitD": "tsc src/main.ts -d --declarationDir dist",
     "clean": "rimraf dist && rimraf release",
-    "package": "run-p clean && cross-env NODE_ENV=production run-p build && pkg -t node18-win,node18-macos,node18-linux -o release/timezip dist/main.js",
+    "package": "run-p clean && cross-env NODE_ENV=production run-p build && pkg -t node18-win,node18-macos,node18-linux -o release/timezip dist/cli.js",
     "test": "run-p clean && run-p build-dev && cross-env NODE_ENV=development node . test/target ../"
   },
   "author": "bistalink",
@@ -23,6 +24,10 @@
     "rimraf": "^5.0.5",
     "typescript": "^5.3.3"
   },
+  "bin":{
+    "timezip": "dist/cli.js"
+  },
+  "keywords": ["date", "time", "zip", "archive", "backup"],
   "dependencies": {
     "adm-zip": "^0.5.10"
   }

@@ -1,66 +1,45 @@
-import * as fs from "fs";
 import * as path from "path";
+import * as fs from "fs";
 import AdmZip from "adm-zip";
 
-declare const process: NodeJS.Process & {
-  pkg: boolean | undefined;
-};
-
-
-const isDev: boolean = process.env.NODE_ENV == "development";
-const targetArg: string | undefined = process.argv[2];
-const outputArg: string | undefined = process.argv[3];
-const workDir = process.pkg                                   // 作業ディレクトリ（出力先）
-        ? path.dirname(process.execPath)                      // pkgによってパッケージングされている場合は実行ファイル
-        : path.resolve(process.cwd(), isDev ? "test" : "");   // 開発環境の場合はtestフォルダを使用する
-
-if (!targetArg){
-  console.error("ERR: Target file or directory not specified\nUsage: timezip [target file or folder]");
-  process.exit(-1);
-}
-
-const target = path.resolve(targetArg);
-
-if (!fs.existsSync(target)){
-  console.error("ERR: No such file or directory");
-  process.exit(-1);
-}
-
-const zip = new AdmZip();
-
-if (fs.lstatSync(target).isDirectory()){
-  zip.addLocalFolder(target);
-}
-else {
-  zip.addLocalFile(target);
-}
-
-const now = new Date();
-const timestamp = now.getFullYear().toString() + "-" 
+/**
+ * Compress file or directory into zip file with date & time suffix.
+ * @param target Target file or directory which will be compressed to zip file
+ * @param outputDir Output directory
+ */
+export default function (target: string, outputDir: string){
+  const targetPath = path.resolve(target);
+  const outputPath = path.resolve(outputDir);
+  const zip = new AdmZip();
+  const now = new Date();
+  const timestamp = now.getFullYear().toString() + "-" 
                   + (now.getMonth() + 1).toString() + "-"
                   + now.getDate().toString() + "-"
                   + now.getHours().toString() + "-"
                   + now.getMinutes().toString() + "-"
                   + now.getSeconds().toString();
-const outputName = path.basename(target) + timestamp + ".zip";
+  let outputName: string;
 
-if (outputArg){
-  const outputDir = path.resolve(outputArg);
-
-  if (!fs.lstatSync(outputDir).isDirectory()){
-    console.error("ERR: Output path is not directory");
-    process.exit(-1);
+  // パスのチェック
+  if (!fs.existsSync(targetPath)){
+    throw new Error("No such file or directory");
+  }
+  if (!fs.existsSync(outputPath)){
+    throw new Error("Output path does not exist");
+  }
+  if (!fs.lstatSync(outputPath).isDirectory()){
+    throw new Error("Output path is not directory");
   }
 
-  if (!fs.existsSync(outputDir)){
-    console.error("ERR: Output path does not exist");
-    process.exit(-1);
+  // zipにまとめる
+  if (fs.lstatSync(targetPath).isDirectory()){
+    zip.addLocalFolder(targetPath);
+  }
+  else {
+    zip.addLocalFile(targetPath);
   }
 
-  zip.writeZip(path.join(outputDir, outputName));
-}
-else{
-  zip.writeZip(path.join(workDir, outputName));
-}
+  outputName = path.basename(targetPath) + timestamp + ".zip";
 
-console.log(`Archive "${outputName}" successfully created.`);
+  zip.writeZip(path.join(outputPath, outputName));
+}
