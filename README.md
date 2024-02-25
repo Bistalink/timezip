@@ -2,7 +2,7 @@
 A simple archive tool for backup files and folders
 
 <p align="center">
-  <img src="./timezip.png">
+  <img src="https://github.com/Bistalink/timezip/raw/main/timezip.png">
 </p>
 
 ## What is this?
@@ -15,7 +15,7 @@ This tool was originally made to backup save data of multiplayer game servers bu
 It's also a good idea to use Task Scheduler in Windows or cron in Linux to make backups on a regular basis! :)
 
 ## Usage
-Firstly download or build binary file and place it into destination folder where you want to store archive files.
+Firstly download or build binary file from GitHub and place it into destination folder where you want to store archive files.
 
 Then run timezip with path to your target file or directory which you want to backup:
 
@@ -37,7 +37,7 @@ npm install timezip
 
 Now you can use timezip from your npm project after importing package.
 ```
-import { timezip } from "timezip";
+import timezip from "timezip";
 import * as path from "path";
 
 const targetFile = path.resolve("mypicture.png");
