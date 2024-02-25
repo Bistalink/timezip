@@ -1,7 +1,6 @@
 import * as fs from "fs";
 import * as path from "path";
 import AdmZip from "adm-zip";
-import * as dateUtils from "date-utils";
 
 declare const process: NodeJS.Process & {
   pkg: boolean | undefined;

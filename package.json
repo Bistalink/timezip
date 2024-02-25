@@ -24,7 +24,6 @@
     "typescript": "^5.3.3"
   },
   "dependencies": {
-    "adm-zip": "^0.5.10",
-    "date-utils": "^1.2.21"
+    "adm-zip": "^0.5.10"
   }
 }
