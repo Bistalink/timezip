@@ -1,4 +1,4 @@
-import timezip from "./main.ts";
+import timezip from "./main";
 import * as path from "path";
 
 declare const process: NodeJS.Process & {
