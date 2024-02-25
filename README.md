@@ -29,6 +29,22 @@ By default, your zip file will be written in the same place where timezip binary
 ./timezip [target file/dir] [output dir (optional)]
 ```
 
+## Usage (as npm package)
+Firstly install timezip as npm package using command below:
+```
+npm install timezip
+```
+
+Now you can use timezip from your npm project after importing package.
+```
+import { timezip } from "timezip";
+import * as path from "path";
+
+const targetFile = path.resolve("mypicture.png");
+
+timezip(targetFile);
+```
+
 ## Build
 It is always simple to just download and use pre-built binary but you can build your own from source code.
 
